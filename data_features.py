@@ -5,6 +5,14 @@ import plotly.express as px
 import pandas as pd
 import numpy as np
 
+def log_converter():
+    datath1_c , datath2_c , datath4_c ,datath5_c , datath6_c = pre_setup()
+    # Apply log10 conversion directly to the entire 'Reviews Total' column
+    datath6_c['Reviews Total'] = np.log10(datath6_c['Reviews Total'].replace(0, np.nan))
+    datath6_c['Revenue Estimated'] = np.log10(datath6_c['Revenue Estimated'].replace(0, np.nan))
+    datath6_c.dropna(subset=['Reviews Total'], inplace=True)  # Drop rows with NaN values that resulted from log10(0)
+    return datath6_c
+
 def build_histogram():
     datath1_c , datath2_c , datath4_c ,datath5_c , datath6_c = pre_setup()
     fig = make_subplots(rows=2,cols=2 , subplot_titles=[
@@ -13,15 +21,18 @@ def build_histogram():
         "Revenue Estimated",
         "Release Date"
     ])
-
     fig.add_trace(go.Histogram(
         x=datath1_c["Launch Price"],
         name="Launch Price",
         # hovertemplate=datath1_c["Title"],
         ),row=1,col=1)
-    fig.add_trace(go.Histogram(x=datath6_c["Reviews Total"],name="Number of Reviews"), row=1, col=2)
-    fig.add_trace(go.Histogram(x=datath1_c["Revenue Estimated"],name="Revenue"), row=2, col=1)
+    fig.add_trace(go.Histogram(x=log_converter()["Reviews Total"],name="Number of Reviews"), row=1, col=2)
+
+    fig.add_trace(go.Histogram(x=log_converter()["Revenue Estimated"],name="Revenue"), row=2, col=1)
+
     fig.add_trace(go.Histogram(x=datath1_c["Release Date"],name="Release"), row=2, col=2)
+
+
 
     return fig
 
