@@ -89,9 +89,10 @@ def build_dictionaries(dev_spy=False):
                 tag_scores[tag] = {}
                 tag_reviewcount[tag] = {}
 
-            if row['Release Date'][:4] not in tag_years[tag]:
-                tag_years[tag][row['Release Date'][:4]] = 0
-                tag_years[tag][row['Release Date'][:4]] += 1
+            date = str(row['Release Date'])[:4]
+            if date not in tag_years[tag]:
+                tag_years[tag][date] = 0
+                tag_years[tag][date] += 1
             if row['Launch Price'] not in tag_prices[tag]:
                 tag_prices[tag][row['Launch Price']] = 0
                 tag_prices[tag][row['Launch Price']] += 1

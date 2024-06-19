@@ -16,8 +16,7 @@ def get_avg_dists(dev_spy):
     for tag, price_dict in tag_prices.items():
         total_price = 0
         total_count = 0
-        for price_str, count in price_dict.items():
-            price = price_to_float(price_str)
+        for price, count in price_dict.items():
             total_price += price * count
             total_count += count
         avg_price = total_price / total_count if total_count > 0 else 0
@@ -43,8 +42,7 @@ def get_avg_dists(dev_spy):
     for tag, price_dict in filtered_tag_prices.items():
         total_price = 0
         total_count = 0
-        for price_str, count in price_dict.items():
-            price = price_to_float(price_str)
+        for price, count in price_dict.items():
             total_price += price * count
             total_count += count
         avg_price = total_price / total_count if total_count > 0 else 0

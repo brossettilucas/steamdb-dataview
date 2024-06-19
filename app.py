@@ -2,17 +2,17 @@ from data_features import build_histogram , build_scatter_matrix , build_heat_pl
 from gender_dev_analytics import get_avg_dists
 from dash import Dash, dcc, html
 
-# (
-#     HISTOGRAM_dist_avg_price_genre, 
-#     BAR_dist_normal_avg_price_genre , 
-#     BAR_dist_normal_score_genre,
-#     BAR_normal_score_genre_div,
-#     HISTOGRAM_dist_avg_price_genre_2,
-#     # gráfico de top 15 generos em matplotlib deve ser refeito em plotly,
-#     SCATTER_blobs_genres,
-#     LINE_games_year,            
-#     LINE_indie_year            
-# ) = get_avg_dists(dev_spy=False)
+(
+    HISTOGRAM_dist_avg_price_genre, 
+    BAR_dist_normal_avg_price_genre , 
+    BAR_dist_normal_score_genre,
+    BAR_normal_score_genre_div,
+    HISTOGRAM_dist_avg_price_genre_2,
+    # gráfico de top 15 generos em matplotlib deve ser refeito em plotly,
+    SCATTER_blobs_genres,
+    LINE_games_year,            
+    LINE_indie_year            
+) = get_avg_dists(dev_spy=False)
 
 external_stylesheets = [
     {
@@ -62,30 +62,30 @@ app.layout = html.Div(
                 "Terminamos por verificar a tendência de lançamentos anuais."
             )
         ),
-        # dcc.Graph(
-        #     figure=HISTOGRAM_dist_avg_price_genre,
-        # ),
-        # dcc.Graph(
-        #     figure=BAR_dist_normal_avg_price_genre,
-        #         ),
-        # dcc.Graph(
-        #     figure=BAR_dist_normal_score_genre,
-        #         ),
-        # dcc.Graph(
-        #     figure=BAR_normal_score_genre_div,
-        #         ),
-        # dcc.Graph(
-        #     figure=HISTOGRAM_dist_avg_price_genre_2,
-        #         ),
-        # dcc.Graph(
-        #     figure=SCATTER_blobs_genres,
-        #         ),
-        # dcc.Graph(
-        #     figure=LINE_games_year,
-        #         ),
-        # dcc.Graph(
-        #     figure=LINE_indie_year,
-        #         ),
+        dcc.Graph(
+            figure=HISTOGRAM_dist_avg_price_genre,
+        ),
+        dcc.Graph(
+            figure=BAR_dist_normal_avg_price_genre,
+                ),
+        dcc.Graph(
+            figure=BAR_dist_normal_score_genre,
+                ),
+        dcc.Graph(
+            figure=BAR_normal_score_genre_div,
+                ),
+        dcc.Graph(
+            figure=HISTOGRAM_dist_avg_price_genre_2,
+                ),
+        dcc.Graph(
+            figure=SCATTER_blobs_genres,
+                ),
+        dcc.Graph(
+            figure=LINE_games_year,
+                ),
+        dcc.Graph(
+            figure=LINE_indie_year,
+                ),
     ]
 )
 
