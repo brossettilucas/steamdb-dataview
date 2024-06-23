@@ -1,2 +1,5 @@
 venv/
 __pycache__/
+src/teste.py
+assets/legacy.py
+.gitignore
