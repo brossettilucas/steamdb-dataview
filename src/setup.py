@@ -123,8 +123,11 @@ def build_dictionaries(dev_spy=False):
                     'average score': dev_avg[dev]['score'],
                     'average review count': dev_avg[dev]['reviews'] }
         devdf.append(new_row)
+    devdf = devdf.sort_values(by=['average price'], ascending=True)
     devprice = px.bar(devdf,  x='Average Price', y='Developer Name', orientation='h', labels={'Developer Name':'name', 'Average Price':'average price'})
+    devdf = devdf.sort_values(by=['average score'], ascending=True)
     devscore = px.bar(devdf,  x='Average Score', y='Developer Name', orientation='h', labels={'Developer Name':'name', 'Average Score':'average score'})
+    devdf = devdf.sort_values(by=['average review count'], ascending=True)
     devreview = px.bar(devdf,  x='Average Review Count', y='Developer Name', orientation='h', labels={'Developer Name':'name', 'Average Review Count':'average review count'})
 
 
