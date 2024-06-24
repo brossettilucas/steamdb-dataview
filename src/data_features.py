@@ -64,7 +64,7 @@ def build_heat_plot(dataCopy):
     fig.update_xaxes(side="bottom")
     return fig
 
-<<<<<<< HEAD
+
 def build_dev_fig(devdf):
     devdf = devdf.sort_values(by=['average price'], ascending=True)
     devprice = px.bar(devdf,  x='Average Price', y='Developer Name', orientation='h', labels={'Developer Name':'name', 'Average Price':'average price'})
@@ -73,9 +73,3 @@ def build_dev_fig(devdf):
     devdf = devdf.sort_values(by=['average review count'], ascending=True)
     devreview = px.bar(devdf,  x='Average Review Count', y='Developer Name', orientation='h', labels={'Developer Name':'name', 'Average Review Count':'average review count'})
     return devprice, devscore, devreview
-=======
-
-# from setup import choose_threshold
-# data = choose_threshold(0)
-# print(data[data['Release Date'] >= '1983-01-17'].sort_values(by=['Release Date'])['Release Date'].head(10))
->>>>>>> parent of 0233d8c (Merge branch 'main' of https://github.com/brossettilucas/steamdb-dataview)
