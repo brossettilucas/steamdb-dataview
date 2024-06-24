@@ -1,5 +1,6 @@
 import pandas as pd
 from collections import Counter
+import plotly.express as px
 import os 
 import json
 
@@ -93,8 +94,41 @@ def build_dictionaries(dev_spy=False):
         if row['Reviews Total'] not in dev_reviewcount[developer]:
             dev_reviewcount[developer][row['Reviews Total']] = 0
         dev_reviewcount[developer][row['Reviews Total']] += 1
+    dev_avg = {}
+    for dev in dev_years:
+        dev_avg[dev] = {}
+        dev_avg[dev]['price'] = 0
+        lenp = 0
+        dev_avg[dev]['score'] = 0
+        lens = 0
+        dev_avg[dev]['reviews'] = 0
+        lenr = 0
+        for price in dev_prices[dev]:
+            dev_avg[dev]['price'] += price * dev_prices[dev][price]
+            lenp += dev_prices[dev][price]
+        for score in dev_scores[dev]:
+            dev_avg[dev]['score'] += score * dev_scores[dev][score]
+            lens += dev_prices[dev][score]
+        for reviews in dev_reviewcount[dev]:
+            dev_avg[dev]['reviews'] += reviews * dev_reviewcount[dev][reviews]
+            lenr += dev_prices[dev][reviews]
 
-    return tag_years,tag_prices,tag_scores,tag_reviewcount, dev_years ,dev_prices ,dev_scores ,dev_reviewcount ,datath1 , datath2 , datath4 ,datath5 , datath6
+        dev_avg[dev]['price'] /= lenp
+        dev_avg[dev]['score'] /= lens
+        dev_avg[dev]['reviews'] /= lenr
+    devdf = pd.DataFrame(columns=['name', 'average price', 'average score', 'average review count'])
+    for dev in dev_years:
+        new_row = { 'name': dev,
+                    'average price': dev_avg[dev]['price'], 
+                    'average score': dev_avg[dev]['score'],
+                    'average review count': dev_avg[dev]['reviews'] }
+        devdf.append(new_row)
+    devprice = px.bar(devdf,  x='Average Price', y='Developer Name', orientation='h', labels={'Developer Name':'name', 'Average Price':'average price'})
+    devscore = px.bar(devdf,  x='Average Score', y='Developer Name', orientation='h', labels={'Developer Name':'name', 'Average Score':'average score'})
+    devreview = px.bar(devdf,  x='Average Review Count', y='Developer Name', orientation='h', labels={'Developer Name':'name', 'Average Review Count':'average review count'})
+
+
+    return tag_years,tag_prices,tag_scores,tag_reviewcount, dev_years ,dev_prices ,dev_scores ,dev_reviewcount ,datath1 , datath2 , datath4 ,datath5 , datath6, devprice, devscore, devreview
 
 
 def get_json_field(field_name):
