@@ -1,5 +1,6 @@
 import pandas as pd
 from collections import Counter
+import plotly.express as px
 import os 
 import json
 
@@ -55,32 +56,75 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 #     dev_scores = {}
 #     dev_reviewcount = {}
     
-#     for index, row in datath1.iterrows():
-#         developer = row['developer']
-#         # create three dictionaries to record each
-#         # tag's year, score and price distribution
-#         if developer not in dev_years:
-#             dev_years[developer] = {}
-#             dev_prices[developer] = {}
-#             dev_scores[developer] = {}
-#             dev_reviewcount[developer] = {}
-#         # print(row['Release Date'].day)
-#         # return 2
-#         date = str(row['Release Date'])[:4]
-#         if date not in dev_years[developer]:
-#             dev_years[developer][date] = 0
-#         dev_years[developer][date] += 1
-#         if row['Launch Price'] not in dev_prices[developer]:
-#             dev_prices[developer][row['Launch Price']] = 0
-#         dev_prices[developer][row['Launch Price']] += 1
-#         if row['Reviews Score Fancy'] not in dev_scores[developer]:
-#             dev_scores[developer][row['Reviews Score Fancy']] = 0
-#         dev_scores[developer][row['Reviews Score Fancy']] += 1
-#         if row['Reviews Total'] not in dev_reviewcount[developer]:
-#             dev_reviewcount[developer][row['Reviews Total']] = 0
-#         dev_reviewcount[developer][row['Reviews Total']] += 1
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    
+#  ------ CÓDIGO MURILO GRAFICO DEVS ------------- #
 
-#     return tag_years,tag_prices,tag_scores,tag_reviewcount, dev_years ,dev_prices ,dev_scores ,dev_reviewcount ,datath1 , datath2 , datath4 ,datath5 , datath6
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+    # for index, row in datath1.iterrows():
+    #     developer = row['developer']
+    #     # create three dictionaries to record each
+    #     # tag's year, score and price distribution
+    #     if developer not in dev_years:
+    #         dev_years[developer] = {}
+    #         dev_prices[developer] = {}
+    #         dev_scores[developer] = {}
+    #         dev_reviewcount[developer] = {}
+    #     # print(row['Release Date'].day)
+    #     # return 2
+    #     date = str(row['Release Date'])[:4]
+    #     if date not in dev_years[developer]:
+    #         dev_years[developer][row['Release Date'].year] = 0
+    #     dev_years[developer][row['Release Date'].year] += 1
+    #     if row['Launch Price'] not in dev_prices[developer]:
+    #         dev_prices[developer][row['Launch Price']] = 0
+    #     dev_prices[developer][row['Launch Price']] += 1
+    #     if row['Reviews Score Fancy'] not in dev_scores[developer]:
+    #         dev_scores[developer][row['Reviews Score Fancy']] = 0
+    #     dev_scores[developer][row['Reviews Score Fancy']] += 1
+    #     if row['Reviews Total'] not in dev_reviewcount[developer]:
+    #         dev_reviewcount[developer][row['Reviews Total']] = 0
+    #     dev_reviewcount[developer][row['Reviews Total']] += 1
+    # dev_avg = {}
+    # for dev in dev_years:
+    #     dev_avg[dev] = {}
+    #     dev_avg[dev]['price'] = 0
+    #     lenp = 0
+    #     dev_avg[dev]['score'] = 0
+    #     lens = 0
+    #     dev_avg[dev]['reviews'] = 0
+    #     lenr = 0
+    #     for price in dev_prices[dev]:
+    #         dev_avg[dev]['price'] += price * dev_prices[dev][price]
+    #         lenp += dev_prices[dev][price]
+    #     for score in dev_scores[dev]:
+    #         dev_avg[dev]['score'] += score * dev_scores[dev][score]
+    #         lens += dev_prices[dev][score]
+    #     for reviews in dev_reviewcount[dev]:
+    #         dev_avg[dev]['reviews'] += reviews * dev_reviewcount[dev][reviews]
+    #         lenr += dev_prices[dev][reviews]
+
+    #     dev_avg[dev]['price'] /= lenp
+    #     dev_avg[dev]['score'] /= lens
+    #     dev_avg[dev]['reviews'] /= lenr
+    # devdf = pd.DataFrame(columns=['name', 'average price', 'average score', 'average review count'])
+    # for dev in dev_years:
+    #     new_row = { 'name': dev,
+    #                 'average price': dev_avg[dev]['price'], 
+    #                 'average score': dev_avg[dev]['score'],
+    #                 'average review count': dev_avg[dev]['reviews'] }
+    #     devdf.append(new_row)
+    # devdf = devdf.sort_values(by=['average price'], ascending=True)
+    # devprice = px.bar(devdf,  x='Average Price', y='Developer Name', orientation='h', labels={'Developer Name':'name', 'Average Price':'average price'})
+    # devdf = devdf.sort_values(by=['average score'], ascending=True)
+    # devscore = px.bar(devdf,  x='Average Score', y='Developer Name', orientation='h', labels={'Developer Name':'name', 'Average Score':'average score'})
+    # devdf = devdf.sort_values(by=['average review count'], ascending=True)
+    # devreview = px.bar(devdf,  x='Average Review Count', y='Developer Name', orientation='h', labels={'Developer Name':'name', 'Average Review Count':'average review count'})
+
+
+    # return tag_years,tag_prices,tag_scores,tag_reviewcount, dev_years ,dev_prices ,dev_scores ,dev_reviewcount ,datath1 , datath2 , datath4 ,datath5 , datath6, devprice, devscore, devreview
 
 
 def get_json_field(field_name):
