@@ -21,7 +21,7 @@ def make_treemap_top_devs(datath1,topn=15):
     developer_reviews = datath1.groupby('developer')['Reviews Total'].sum().reset_index()
     top_developer_reviews = developer_reviews.sort_values(by='Reviews Total', ascending=False).reset_index(drop=True)
     top_developers = top_developer_reviews.head(topn)['developer'].tolist()
-    filtered_data = datath1[datath1['developer'].isin(top_developers)]
+    filtered_data = datath1[datath1['developer'].isin(top_developers)].copy()
     filtered_data['Tags'] = filtered_data['Tags'].str.split(',')
     filtered_data['Tags'] = filtered_data['Tags'].apply(lambda x: x[:3] if isinstance(x, list) else [])
     developer_tags_dict = {}
@@ -40,7 +40,7 @@ def make_treemap_top_devs(datath1,topn=15):
     treemap_df = treemap_df.sort_values(by='Total Reviews', ascending=False)
 
     fig = px.treemap(treemap_df, path=['Developer', 'Tag'], values='Total Reviews',
-                    title='Treemap of Top Developers by Reviews and Their Tags',
+                    title='Treemap of Most Reviewed Developers and Their Tags',
                     labels={'Total Reviews': 'Total Reviews'})
 
     return fig

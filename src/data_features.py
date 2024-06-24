@@ -34,8 +34,14 @@ def build_histogram(datath1_c,datath6_c):
 
 
 def build_scatter_matrix(datath1_c,outliers=False):
+    spooky_men_id = 2204850
+    cs_id = 730
+    pubg_id = 578080
+    main_outliers_ids = [spooky_men_id , cs_id]
+    dataNoOutliers = datath1_c[-datath1_c['App ID'].isin(main_outliers_ids)]
+    
     target_dists = ['Reviews Total', 'Reviews Score Fancy','Launch Price', 'Revenue Estimated']
-    fig = px.scatter_matrix(datath1_c,
+    fig = px.scatter_matrix(datath1_c if outliers else dataNoOutliers,
                         dimensions = target_dists,
                         labels = {'Reviews Total':'reviews' ,'Reviews Score Fancy': 'score(%)' , 'Launch Price':'price','Revenue Estimated':'revenue'},
                         title='Correlation between attributes with outliers')
@@ -43,10 +49,12 @@ def build_scatter_matrix(datath1_c,outliers=False):
 
 
 def build_heat_plot(dataCopy):
+    
     months = ['January','February','March','April','May','June','July', 'August','September','October', 'November','December']
     days = [x for x in range(1,32)]
 
     # expanded days and month columns
+    dataCopy['Release Date'] = pd.to_datetime(dataCopy['Release Date'],errors='coerce')
     dataCopy['Month'] = dataCopy['Release Date'].dt.month_name()
     dataCopy['Day'] = dataCopy['Release Date'].dt.day.astype(int)
     dayGroupedData = dataCopy.groupby(['Month','Day']).size().reset_index().pivot(index='Month',columns='Day').fillna(0)
