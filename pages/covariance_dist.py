@@ -1,4 +1,5 @@
-from dash import html, Input, Output, callback, register_page, dcc 
+from dash import html, callback, register_page, dcc 
+from dash.dependencies import Input, Output
 import dash_daq as daq
 
 from src.data_features import build_scatter_matrix 
@@ -10,36 +11,35 @@ dataCopy = choose_threshold(0)
 
 register_page(
     __name__,
-    name='Covariância dos Atributos',
+    name='Correlação dos Atributos',
     top_nav=True,
     path='/covariance_dist'
 )
 
+header = html.H1('Correlação dos Atributos', style={'textAlign': 'center'})
 
 def layout():
     layout = html.Div([
-        html.H1(
-            [
-                "Caracterização dos Dados"
-            ]
-        ),
         html.Div(
-            children=[
-                # CARACTERIZAÇÃO DO DATASET
-                html.H2(children="Covariância dos atributos"),
-                dcc.Graph(
-                    figure=build_scatter_matrix(datath1),
-                )
+            [
+                header,
+                html.Br(),
+                html.Br(),
+                html.Div([daq.BooleanSwitch(id='outlier-switch', on=False,label='Remove Outliers')]),
+                html.Br(),
+                html.Div(id="outlier-button-result"),
+                html.Br(),   
             ],
-            className="view"
+            style={'margin': '5% 10% 5% 10%'}
         )  
     ])
     return layout
 
 
-# @callback(
-#     Output('boolean-switch-result', 'children'),
-#     Input('our-boolean-switch', 'on')
-# )
+@callback(Output('outlier-button-result', 'children'),Input('outlier-switch', 'on'))
 def update_output(on):
-    return f'The switch is {on}.'
+    if on:
+        return dcc.Graph(figure=build_scatter_matrix(datath1,outliers=False))
+    else:
+        return dcc.Graph(figure=build_scatter_matrix(datath1,outliers=True))
+        

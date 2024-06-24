@@ -3,7 +3,7 @@ import dash
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 from navbar import create_navbar
-from src.setup import pre_setup
+
 
 # Toggle the themes at [dbc.themes.LUX]
 # The full list of available themes is:

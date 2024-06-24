@@ -3,3 +3,4 @@ __pycache__/
 src/teste.py
 assets/legacy.py
 .gitignore
+src/gender_dists_old

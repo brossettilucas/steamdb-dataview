@@ -15,28 +15,22 @@ register_page(
     path='/char_dist'
 )
 
+header = html.H1('Distribuição - Atributos', style={'textAlign': 'center'})
 
 def layout():
     layout = html.Div([
-        html.H1(
-            [
-                "Caracterização dos Dados"
-            ]
-        ),
         html.Div(
-            children=[
-                # CARACTERIZAÇÃO DO DATASET
-                html.H2(children="Descrição dos Atributos"),
-                html.P(
-                    children=(
-                        "As distribuições apresentadas fornecem uma visão dos atributos quantificáveis do conjunto de dados."
-                    )
-                ),
-                dcc.Graph(
-                    figure=build_histogram(datath1,datath6),
-                )
+            [
+                header,
+                html.Br(),
+                html.Br(),
+                # html.Div([daq.BooleanSwitch(id='outlier-switch', on=True,label='Remove Outliers')]),
+                # html.Br(),
+                # html.Div(id="outlier-button-result"),
+                 dcc.Graph(figure=build_histogram(datath1,datath6)),
+                html.Br(),   
             ],
-            className="view"
+            style={'margin': '5% 10% 5% 10%'}
         )  
     ])
     return layout
@@ -46,5 +40,5 @@ def layout():
 #     Output('boolean-switch-result', 'children'),
 #     Input('our-boolean-switch', 'on')
 # )
-def update_output(on):
-    return f'The switch is {on}.'
+# def update_output(on):
+#     return f'The switch is {on}.'

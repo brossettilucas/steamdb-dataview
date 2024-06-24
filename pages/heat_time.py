@@ -1,4 +1,5 @@
-from dash import html, Input, Output, callback, register_page, dcc 
+from dash import html, callback, register_page, dcc 
+from dash.dependencies import Input, Output
 import dash_daq as daq
 
 from src.data_features import build_heat_plot
@@ -10,36 +11,29 @@ dataCopy = choose_threshold(0)
 
 register_page(
     __name__,
-    name='Datas de Lançamentos',
+    name='Mapa de calor dos lançamentos',
     top_nav=True,
     path='/heat_time'
 )
 
+about_data = dcc.Markdown("""Dataset construído a partir dos dados disponibilizados pelo Steam Trends 2023 
+                          e da coleta do steamspy. 
+                          """)
+
+header = html.H1('Heatmap - lançamentos', style={'textAlign': 'center'})
+line_break = html.Div([dcc.Markdown("""___""")], style={'margin': '5% 0% 5% 0%'})
 
 def layout():
     layout = html.Div([
-        html.H1(
-            [
-                "Caracterização dos Dados"
-            ]
-        ),
         html.Div(
-            children=[
-                # CARACTERIZAÇÃO DO DATASET
-                html.H2(children="Mapa de calor das datas de lançamento"),
-                dcc.Graph(
-                    figure=build_heat_plot(dataCopy),
-                )
+            [
+                header,
+                html.Br(),
+                html.Br(),
+                dcc.Graph(figure=build_heat_plot(dataCopy))
             ],
-            className="view"
+            # className="view",
+            style={'margin': '5% 10% 5% 10%'}
         )  
     ])
     return layout
-
-
-# @callback(
-#     Output('boolean-switch-result', 'children'),
-#     Input('our-boolean-switch', 'on')
-# )
-def update_output(on):
-    return f'The switch is {on}.'

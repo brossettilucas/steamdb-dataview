@@ -1,9 +1,10 @@
-from dash import html, register_page, dcc, html, Input, Output, callback  
+from dash import html, register_page, dcc, html, callback  
+from dash.dependencies import Input, Output
 import dash_daq as daq
 import dash_bootstrap_components as dbc
 import plotly.graph_objects as go
 
-from src.setup import build_dictionaries, choose_threshold
+from src.setup import choose_threshold
 
 register_page(
     __name__,
@@ -12,118 +13,66 @@ register_page(
     path='/'
 )
 
+def create_table(df):
+    fig = go.Figure(data=[go.Table(
+        header=dict(values=df.columns, align='left'),
+        cells=dict(values=df.values.T, align='left'))
+    ])
+    fig.update_layout(paper_bgcolor="#e5ecf6", margin={"t":10, "l":20, "r":20, "b":5})
+    return fig
 
+about_data = dcc.Markdown("""Dataset construído a partir dos dados disponibilizados pelo Steam Trends 2023 
+                          e da coleta do steamspy. 
+                          """)
 
-genres = ['a' , 'b' ,'c' , 'd' , 'banana']
-years = [i for i in range(1990,2024)]
-
+header = html.H1('Dataset', style={'textAlign': 'center'})
+line_break = html.Div([dcc.Markdown("""___""")], style={'margin': '5% 0% 5% 0%'})
 
 def layout():
     layout = html.Div([
-        html.H1(
-            [
-                "Home Page"
-            ]
-        ),
-        html.Div(
-            children=[
-                html.Div(
-                    children=[
-                        html.Div(children="Genre", className="menu-title"),
-                        dcc.Dropdown(
-                            id="region-filter",
-                            options=[
-                                {"label": genre, "value": genre}
-                                for genre in genres
-                            ],
-                            value="a",
-                            clearable=False,
-                            className="dropdown",
-                        ),
-                    ]
-                ),
-                html.Div(
-                    children=[
-                        html.Div(children="Year", className="menu-title"),
-                        dcc.Dropdown(
-                            id="type-filter",
-                            options=[
-                                {
-                                    "label": year,
-                                    "value": year,
-                                }
-                                for year in years
-                            ],
-                            value="2023",
-                            clearable=False,
-                            searchable=False,
-                            className="dropdown",
-                        ),
-                    ],
-                ),
-                html.Div(
-                    children=[
-                        html.Div(
-                            children="Date Range", className="menu-title"
-                        ),
-                        dcc.DatePickerRange(
-                            id="date-range",
-                            min_date_allowed='1990-12-01',
-                            max_date_allowed='2023-12-01',
-                            start_date='1990-12-01',
-                            end_date='2023-12-01',
-                        ),
-                    ]
-                ),
-                html.Div(
-                    children=[
-                        html.Div(
-                            children="Ignore outliers",className="menu-title"
-                        ),
-                        daq.BooleanSwitch(id='our-boolean-switch', on=False),
-                        html.Div(id='boolean-switch-result')
-                ])
-            ],
-            className="menu",
-        ),
-        
-        
-
-        #ANÁLISE POR GÊNEROS E DEVS
-        html.H2(children="Gêneros e Popularidade"),
-        html.P(
-            children=(
-                "Aqui avaliamos como os genêros catalogados dos jogos na plataforma influenciam o seu sucesso comercial."
-                "Terminamos por verificar a tendência de lançamentos anuais."
-            )
-        ),
-        # dcc.Graph(
-        #     figure=HISTOGRAM_dist_avg_price_genre,
-        # ),
-        # dcc.Graph(
-        #     figure=BAR_dist_normal_avg_price_genre,
-        #         ),
-        # dcc.Graph(
-        #     figure=BAR_dist_normal_score_genre,
-        #         ),
-        # dcc.Graph(
-        #     figure=BAR_normal_score_genre_div,
-        #         ),
-        # dcc.Graph(
-        #     figure=HISTOGRAM_dist_avg_price_genre_2,
-        #         ),s
-        # dcc.Graph(
-        #     figure=SCATTER_blobs_genres,
-        #         ),
-        # dcc.Graph(
-        #     figure=LINE_games_year,
-        #         ),
-        # dcc.Graph(
-        #     figure=LINE_indie_year,
-        #         ),
-
-    ])
+        header,
+        html.Br(),
+        html.Br(),
+        about_data,
+        html.Br(),
+        dcc.Graph(id='dataset',figure=create_table(choose_threshold(1))),
+    ],style={'margin': '5% 10% 5% 10%'})
     return layout
 
 
-
+        # html.Div(
+        #     children=[
+        #         html.Div(
+        #             children=[
+        #                 html.Div(children="Genre", className="menu-title"),
+        #                 dcc.Dropdown(
+        #                     id="region-filter",
+        #                     options=[
+        #                         {"label": genre, "value": genre}
+        #                         for genre in genres
+        #                     ],
+        #                     value="a",
+        #                     clearable=False,
+        #                     className="dropdown",
+        #                 ),
+        #             ]
+        #         ),
+        #         html.Div(
+        #             children=[
+        #                 html.Div(children="Year", className="menu-title"),
+        #                 dcc.Dropdown(
+        #                     id="type-filter",
+        #                     options=[
+        #                         {
+        #                             "label": year,
+        #                             "value": year,
+        #                         }
+        #                         for year in years
+        #                     ],
+        #                     value="2023",
+        #                     clearable=False,
+        #                     searchable=False,
+        #                     className="dropdown",
+        #                 ),
+        #             ],
+        #         ),  

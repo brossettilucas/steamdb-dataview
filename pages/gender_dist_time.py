@@ -1,32 +1,37 @@
-from dash import Dash, html, Input, Output, callback, dcc , register_page
-from src.gender_dev_analytics import get_line_year
+from dash import Dash, html, callback, dcc , register_page
+from src.gender_analytics import get_line_year
 from src.setup import get_json_field, choose_threshold
-
-LINE_games_year = get_line_year(choose_threshold(1))
+from dash.dependencies import Input, Output
+import dash_daq as daq
 
 register_page(
     __name__,
-    name='Timeline',
+    name='Crescimento dos Gêneros',
     top_nav=True,
     path='/gender_dist_time'
 )
 
+header = html.H1('Crescimento dos gêneros', style={'textAlign': 'center'})
+
 def layout():
     layout = html.Div([
-        html.H1(
-            [
-                "Linha do tempo de lançamentos"
-            ]
-        ),
         html.Div(
-            children=[
-                #ANÁLISE POR GÊNEROS E DEVS
-                html.H2(children="Timeline generos"),
-                dcc.Graph(
-                    figure=LINE_games_year,
-                        )   
+            [
+                header,
+                html.Br(),
+                html.Br(),
+                html.Div([daq.BooleanSwitch(id='log-switch', on=False,label='Log eixo y')]),
+                html.Br(),
+                html.Div(id="log-switch-result")
             ],
-            className="view"
+            style={'margin': '5% 10% 5% 10%'}
         )  
     ])
     return layout
+
+@callback(Output('log-switch-result', 'children'),Input('log-switch', 'on'))
+def update_output(on):
+    if on:
+        return dcc.Graph(figure=get_line_year(choose_threshold(1),isLog=True))
+    else:
+        return dcc.Graph(figure=get_line_year(choose_threshold(1),isLog=False))
