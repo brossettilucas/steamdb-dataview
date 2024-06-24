@@ -52,16 +52,16 @@ def build_dictionaries(dev_spy=False):
             date = str(row['Release Date'])[:4]
             if date not in tag_years[tag]:
                 tag_years[tag][date] = 0
-                tag_years[tag][date] += 1
+            tag_years[tag][date] += 1
             if row['Launch Price'] not in tag_prices[tag]:
                 tag_prices[tag][row['Launch Price']] = 0
-                tag_prices[tag][row['Launch Price']] += 1
+            tag_prices[tag][row['Launch Price']] += 1
             if row['Reviews Score Fancy'] not in tag_scores[tag]:
                 tag_scores[tag][row['Reviews Score Fancy']] = 0
-                tag_scores[tag][row['Reviews Score Fancy']] += 1
+            tag_scores[tag][row['Reviews Score Fancy']] += 1
             if row['Reviews Total'] not in tag_reviewcount[tag]:
                 tag_reviewcount[tag][row['Reviews Total']] = 0
-                tag_reviewcount[tag][row['Reviews Total']] += 1
+            tag_reviewcount[tag][row['Reviews Total']] += 1
     
     #creates timelines for each tag, to be viewed in a graph
     dev_years = {}
@@ -80,7 +80,8 @@ def build_dictionaries(dev_spy=False):
             dev_reviewcount[developer] = {}
         # print(row['Release Date'].day)
         # return 2
-        if row['Release Date'].year not in dev_years[developer]:
+        date = str(row['Release Date'])[:4]
+        if date not in dev_years[developer]:
             dev_years[developer][row['Release Date'].year] = 0
         dev_years[developer][row['Release Date'].year] += 1
         if row['Launch Price'] not in dev_prices[developer]:
