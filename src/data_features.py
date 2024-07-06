@@ -23,9 +23,11 @@ def build_histogram(datath1_c,datath6_c):
         name="Launch Price",
         # hovertemplate=datath1_c["Title"],
         ),row=1,col=1)
-    fig.add_trace(go.Histogram(x=log_converter(datath6_c)["Reviews Total"],name="Number of Reviews"), row=1, col=2)
+    #fig.add_trace(go.Histogram(x=log_converter(datath6_c)["Reviews Total"],name="Number of Reviews"), row=1, col=2)
+    fig.add_trace(go.Histogram(x=datath6_c["Reviews Total"],name="Number of Reviews"), row=1, col=2)
 
-    fig.add_trace(go.Histogram(x=log_converter(datath6_c)["Revenue Estimated"],name="Revenue"), row=2, col=1)
+    #fig.add_trace(go.Histogram(x=log_converter(datath6_c)["Revenue Estimated"],name="Revenue"), row=2, col=1)
+    fig.add_trace(go.Histogram(x=datath6_c["Revenue Estimated"],name="Revenue"), row=2, col=1)
 
     fig.add_trace(go.Histogram(x=datath1_c["Release Date"],name="Release"), row=2, col=2)
 
