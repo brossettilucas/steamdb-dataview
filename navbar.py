@@ -1,5 +1,3 @@
-
-from dash import html
 import dash_bootstrap_components as dbc
 
 
@@ -11,7 +9,7 @@ def create_navbar():
                 in_navbar=True,
                 label="Menu",
                 align_end=True,
-                children=[  # Add as many menu items as you need
+                children=[  
                     dbc.DropdownMenuItem("Home", href='/'),
                     
                     dbc.DropdownMenuItem(divider=True),
@@ -25,15 +23,13 @@ def create_navbar():
                     dbc.DropdownMenuItem("Bubble Chart Gêneros", href='/gender_dist'),
                     dbc.DropdownMenuItem("Crescimento dos Gêneros", href='/gender_dist_time'),
                     dbc.DropdownMenuItem("Desenvolvedoras e Gêneros", href='/dev_maps'),
-                    # dbc.DropdownMenuItem("Estudo dos Gêneros", href='/gender_dist'),
                 ],
             ),
         ],
         brand='Steam Trends 2023',
         brand_href="/",
-        # sticky="top",  # Uncomment if you want the navbar to always appear at the top on scroll.
-        color="dark",  # Change this to change color of the navbar e.g. "primary", "secondary" etc.
-        dark=True,  # Change this to change color of text within the navbar (False for dark text)
+        color="dark", 
+        dark=True,
     )
 
     return navbar

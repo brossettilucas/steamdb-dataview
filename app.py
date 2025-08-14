@@ -3,17 +3,8 @@ from dash import html, dcc
 import dash_bootstrap_components as dbc
 from navbar import create_navbar
 
-
-# Toggle the themes at [dbc.themes.LUX]
-# The full list of available themes is:
-# BOOTSTRAP, CERULEAN, COSMO, CYBORG, DARKLY, FLATLY, JOURNAL, LITERA, LUMEN,
-# LUX, MATERIA, MINTY, PULSE, SANDSTONE, SIMPLEX, SKETCHY, SLATE, SOLAR,
-# SPACELAB, SUPERHERO, UNITED, YETI, ZEPHYR.
-# To see all themes in action visit:
-# https://dash-bootstrap-components.opensource.faculty.ai/docs/themes/explorer/
-
 NAVBAR = create_navbar()
-# To use Font Awesome Icons
+
 FA621 = "https://use.fontawesome.com/releases/v6.2.1/css/all.css"
 APP_TITLE = "First Dash App"
 
@@ -32,14 +23,14 @@ app = dash.Dash(
     __name__,
     suppress_callback_exceptions=True,
     external_stylesheets=[
-        dbc.themes.LUX,  # Dash Themes CSS
-        FA621,  # Font Awesome Icons CSS
+        dbc.themes.LUX, 
+        FA621,  
     ],
     title=APP_TITLE,
-    use_pages=True# New in Dash 2.7 - Allows us to register pages
+    use_pages=True
 )
 
-app.layout = dcc.Loading(  # <- Wrap App with Loading Component
+app.layout = dcc.Loading(
     id='loading_page_content',
     children=[
         html.Div(
@@ -49,8 +40,8 @@ app.layout = dcc.Loading(  # <- Wrap App with Loading Component
             ]
         )
     ],
-    color='primary',  # <- Color of the loading spinner
-    fullscreen=True  # <- Loading Spinner should take up full screen
+    color='primary',
+    fullscreen=True 
 )
 
 server = app.server
